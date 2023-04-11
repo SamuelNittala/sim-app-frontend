@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
@@ -6,7 +7,6 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
 })
-
 export class AppComponent {
   firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
@@ -41,7 +41,7 @@ export class AppComponent {
     };
   }
 
-  constructor(private _formBuilder: FormBuilder) {
+  constructor(private _formBuilder: FormBuilder, private http: HttpClient) {
     this.firstFormGroup = this._formBuilder.group({
       simNumber: ['', Validators.required],
       serviceNumber: ['', Validators.required],
@@ -67,6 +67,17 @@ export class AppComponent {
       email: ['', Validators.email],
     });
     this.fifthFormGroup = this._formBuilder.group({});
-    // Create the other form groups here
+  }
+
+  callApi() {
+    const apiUrl = 'https://swapi.dev/api/people/1/';
+    this.http.get(apiUrl).subscribe(
+      (data) => {
+        console.log('API Response: ', data);
+      },
+      (error) => {
+        console.error('API Error: ', error);
+      }
+    );
   }
 }

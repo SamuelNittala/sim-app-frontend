@@ -39,7 +39,7 @@
           <input matInput placeholder="Service Number" formControlName="serviceNumber" required />
         </mat-form-field>
         <br />
-        <button mat-button matStepperNext>Next</button>
+        <button mat-button matStepperNext (click)="callApi()">Next</button>
       </form>
     </mat-step>
     <mat-step [stepControl]="secondFormGroup">
