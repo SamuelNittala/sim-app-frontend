@@ -25,25 +25,26 @@
 </style>
 
 <div>
-  <mat-horizontal-stepper [linear]="true">
+  <mat-horizontal-stepper [linear]="true" #stepper>
     <mat-step [stepControl]="firstFormGroup">
+      <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
       <form [formGroup]="firstFormGroup">
         <ng-template matStepLabel>Step 1</ng-template>
         <mat-form-field>
           <mat-label>Sim Number</mat-label>
-          <input matInput placeholder="Sim Number" formControlName="simNumber" required />
+          <input matInput placeholder="Sim Number" formControlName="simNumber" minlength="13" maxlength="13"  required />
         </mat-form-field>
         <br />
         <mat-form-field>
           <mat-label>Service Number</mat-label>
-          <input matInput placeholder="Service Number" formControlName="serviceNumber" required />
+          <input matInput placeholder="Service Number" formControlName="serviceNumber" minlength="10" maxlength="10" required />
         </mat-form-field>
         <br />
-        <button mat-button matStepperNext (click)="callApi(stepper)">Next</button>
-        <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+        <button mat-button (click)="onFirstStepNextButtonClick(stepper)">Next</button>
       </form>
     </mat-step>
     <mat-step [stepControl]="secondFormGroup">
+      <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
       <form [formGroup]="secondFormGroup">
         <ng-template matStepLabel>Step 2</ng-template>
         <mat-form-field>
@@ -58,7 +59,7 @@
         <br />
         <input type="checkbox" formControlName="confirm" />
         <br />
-        <button mat-button matStepperNext>Next</button>
+        <button mat-button (click)="onSecondStepNextButtonClick(stepper)">Next</button>
       </form>
     </mat-step>
     <mat-step [stepControl]="thirdFormGroup">
@@ -66,9 +67,68 @@
         <ng-template matStepLabel>Step 3</ng-template>
         <mat-form-field>
           <mat-label>Title</mat-label>
-          <input matInput placeholder="Title" formControlName="title" required />
+          <mat-select formControlName="title">
+            <mat-option *ngFor="let title of titles" [value]="title.code">{{
+              title.name
+              }}</mat-option>
+          </mat-select>
         </mat-form-field>
         <br />
+        <mat-form-field>
+          <mat-label>First Name</mat-label>
+          <input matInput placeholder="First Name" formControlName="firstName" required />
+        </mat-form-field>
+        <br />
+        <mat-form-field>
+          <mat-label>Last Name</mat-label>
+          <input matInput placeholder="Last Name" formControlName="lastName" required />
+        </mat-form-field>
+        <br />
+        <mat-form-field>
+          <mat-label>Email</mat-label>
+          <input matInput placeholder="Email" formControlName="email" [value]="secondFormGroup.value.email" readonly  />
+        </mat-form-field>
+        <br />
+        <button mat-button matStepperNext>Next</button>
+      </form>
+    </mat-step>
+    <mat-step [stepControl]="fourthFormGroup">
+      <form [formGroup]="fourthFormGroup">
+        <ng-template matStepLabel>Step 4</ng-template>
+        <mat-form-field>
+          <mat-label>ID type</mat-label>
+          <input matInput placeholder="Aadhar" formControlName="idType" readonly />
+        </mat-form-field>
+        <br />
+        <mat-form-field>
+          <mat-label>ID No</mat-label>
+          <input matInput placeholder="Id no" formControlName="idNo" required />
+        </mat-form-field>
+        <br />
+        <mat-form-field>
+          <mat-label>Select a State</mat-label>
+          <mat-select formControlName="state">
+            <mat-option *ngFor="let state of states" [value]="state.code">{{
+              state.name
+              }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <br />
+        <mat-form-field>
+          <mat-label>Address</mat-label>
+          <input matInput placeholder="Address" formControlName="address" required />
+        </mat-form-field>
+        <br/>
+        <mat-form-field>
+          <mat-label>pincode</mat-label>
+          <input matInput placeholder="pincode" formControlName="pincode" required />
+        </mat-form-field>
+        <br/>
+        <mat-form-field>
+          <mat-label>city</mat-label>
+          <input matInput placeholder="city" formControlName="city" required />
+        </mat-form-field>
+        <br/>
         <mat-form-field>
           <mat-label>First Name</mat-label>
           <input matInput placeholder="First Name" formControlName="firstName" required />
@@ -84,38 +144,25 @@
           <input matInput placeholder="Email" formControlName="email" required />
         </mat-form-field>
         <br />
+        <mat-form-field>
+          <mat-label>Date of Birth</mat-label>
+          <input matInput placeholder="Date of Birth" formControlName="dob" required />
+        </mat-form-field>
+        <br />
         <button mat-button matStepperNext>Next</button>
       </form>
     </mat-step>
-    <mat-step [stepControl]="fourthFormGroup">
-      <form [formGroup]="fourthFormGroup">
-        <ng-template matStepLabel>Step 3</ng-template>
-        <mat-form-field>
-          <mat-label>ID type</mat-label>
-          <input matInput placeholder="Aadhar" formControlName="idType" required />
-        </mat-form-field>
-        <br />
-        <mat-form-field>
-          <mat-label>ID No</mat-label>
-          <input matInput placeholder="Id no" formControlName="idNo" required />
-        </mat-form-field>
-        <br />
-        <mat-form-field>
-          <mat-label>Select a State</mat-label>
-          <mat-select>
-            <mat-option *ngFor="let state of states" [value]="state.code">{{
-              state.name
-              }}</mat-option>
-          </mat-select>
-        </mat-form-field>
-        <br />
-        <mat-form-field>
-          <mat-label>Email</mat-label>
-          <input matInput placeholder="Email" formControlName="email" required />
-        </mat-form-field>
-        <br />
-        <button mat-button matStepperNext>Next</button>
-      </form>
+    <mat-step [stepControl]="fifthFormGroup">
+        <ng-template matStepLabel>Step 5</ng-template>
+        <p> {{ firstFormGroup.value.simNumber }} </p>
+        <p> {{ firstFormGroup.value.serviceNumber }} </p>
+        <p> {{ thirdFormGroup.value.firstName}} </p>
+        <p> {{ secondFormGroup.value.email }} </p>
+        <button mat-button (click)="onSubmit(stepper)">Next</button>
+    </mat-step>
+    <mat-step [stepControl]="sixthFormGroup">
+      <ng-template matStepLabel>Success</ng-template>
+      <h1>Deatils Submitted Successfully</h1>
     </mat-step>
   </mat-horizontal-stepper>
 </div>
