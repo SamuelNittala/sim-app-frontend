@@ -16,6 +16,8 @@ export class AppComponent {
 
   user: any = {};
 
+  errorMessage: string | null = null;
+
   states = [
     { name: 'Andhra Pradesh', code: 'AP' },
     { name: 'Arunachal Pradesh', code: 'AR' },
@@ -73,7 +75,9 @@ export class AppComponent {
     const apiUrl = 'http://localhost:9191/verify';
     this.http.post(apiUrl,{simNumber:this.firstFormGroup.value.simNumber,serviceNumber:this.firstFormGroup.value.serviceNumber}).subscribe(
       (data) => {
-        console.log('API Response: ', data);
+        if(data.checkSim) {
+          this.errorMessage = data.checkSim;
+        }
       },
       (error) => {
         console.error('API Error: ', error);

@@ -26,6 +26,7 @@
 
 <div>
   <mat-horizontal-stepper [linear]="true">
+    <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
     <mat-step [stepControl]="firstFormGroup">
       <form [formGroup]="firstFormGroup">
         <ng-template matStepLabel>Step 1</ng-template>
