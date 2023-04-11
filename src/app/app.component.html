@@ -26,7 +26,6 @@
 
 <div>
   <mat-horizontal-stepper [linear]="true">
-    <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
     <mat-step [stepControl]="firstFormGroup">
       <form [formGroup]="firstFormGroup">
         <ng-template matStepLabel>Step 1</ng-template>
@@ -40,7 +39,8 @@
           <input matInput placeholder="Service Number" formControlName="serviceNumber" required />
         </mat-form-field>
         <br />
-        <button mat-button matStepperNext (click)="callApi()">Next</button>
+        <button mat-button matStepperNext (click)="callApi(stepper)">Next</button>
+        <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
       </form>
     </mat-step>
     <mat-step [stepControl]="secondFormGroup">

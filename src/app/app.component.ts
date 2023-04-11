@@ -77,6 +77,9 @@ export class AppComponent {
       (data) => {
         if(data.checkSim) {
           this.errorMessage = data.checkSim;
+        } else {
+          this.errorMessage = null;
+          stepper.next();
         }
       },
       (error) => {
