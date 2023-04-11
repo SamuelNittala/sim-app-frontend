@@ -70,8 +70,8 @@ export class AppComponent {
   }
 
   callApi() {
-    const apiUrl = 'https://swapi.dev/api/people/1/';
-    this.http.get(apiUrl).subscribe(
+    const apiUrl = 'http://localhost:9191/verify';
+    this.http.post(apiUrl,{simNumber:this.firstFormGroup.value.simNumber,serviceNumber:this.firstFormGroup.value.serviceNumber}).subscribe(
       (data) => {
         console.log('API Response: ', data);
       },
