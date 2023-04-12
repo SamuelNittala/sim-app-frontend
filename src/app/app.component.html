@@ -4,7 +4,6 @@
       Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
       "Segoe UI Symbol";
     font-size: 14px;
-    color: #d55151;
     box-sizing: border-box;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -17,10 +16,12 @@
   h5,
   h6 {
     margin: 8px 0;
+    color: #b93939;
   }
 
   p {
     margin: 0;
+    color: #efecec;
   }
 </style>
 
@@ -34,7 +35,7 @@
       <br/>
       <p>Please keep you SIM kit and identification documents ready.</p>
       <br />
-        <button mat-button (click)="onBrochureNextButtonClick(stepper)">Get connected</button>
+        <button mat-button  (click)="onBrochureNextButtonClick(stepper)">Get connected</button>
     </mat-step>
     <mat-step [stepControl]="firstFormGroup">
       <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
@@ -61,7 +62,7 @@
       <br/>
       <p>Get 120 MB data and 100 calls daily for 10 days at Rs.20</p>
       <br />
-        <button mat-button (click)="onBrochureNextButtonClick(stepper)">Get connected</button>
+        <button mat-button (click)="onOfferNextButtonClick(stepper)">Next</button>
     </mat-step>
     <mat-step [stepControl]="secondFormGroup">
       <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
@@ -174,9 +175,15 @@
     </mat-step>
     <mat-step [stepControl]="fifthFormGroup">
         <ng-template matStepLabel>Step 5</ng-template>
+        <span>SIM number:</span>
         <p> {{ firstFormGroup.value.simNumber }} </p>
+        <span>Service number:</span>
         <p> {{ firstFormGroup.value.serviceNumber }} </p>
+        <span>First name:</span>
         <p> {{ thirdFormGroup.value.firstName}} </p>
+        <span>Last name:</span>
+        <p> {{ thirdFormGroup.value.lastName}} </p>
+        <span>email:</span>
         <p> {{ secondFormGroup.value.email }} </p>
         <button mat-button (click)="onSubmit(stepper)">Next</button>
     </mat-step>
