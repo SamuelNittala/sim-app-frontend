@@ -4,7 +4,7 @@
       Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
       "Segoe UI Symbol";
     font-size: 14px;
-    color: #333;
+    color: #d55151;
     box-sizing: border-box;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -26,6 +26,16 @@
 
 <div>
   <mat-horizontal-stepper [linear]="true" #stepper>
+    <mat-step [stepControl]="brocherPage">
+      <ng-template matStepLabel>brocherPage</ng-template>
+      <h1>Thank you for purchasing a SIM card</h1>
+      <br/>
+      <h2>Let's get connected</h2>
+      <br/>
+      <p>Please keep you SIM kit and identification documents ready.</p>
+      <br />
+        <button mat-button (click)="onBrochureNextButtonClick(stepper)">Get connected</button>
+    </mat-step>
     <mat-step [stepControl]="firstFormGroup">
       <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
       <form [formGroup]="firstFormGroup">
@@ -43,6 +53,16 @@
         <button mat-button (click)="onFirstStepNextButtonClick(stepper)">Next</button>
       </form>
     </mat-step>
+    <mat-step [stepControl]="offerPage">
+      <ng-template matStepLabel>offerPage</ng-template>
+      <h1>Your offer details</h1>
+      <br/>
+      <h2>Special offer</h2>
+      <br/>
+      <p>Get 120 MB data and 100 calls daily for 10 days at Rs.20</p>
+      <br />
+        <button mat-button (click)="onBrochureNextButtonClick(stepper)">Get connected</button>
+    </mat-step>
     <mat-step [stepControl]="secondFormGroup">
       <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
       <form [formGroup]="secondFormGroup">
@@ -57,7 +77,7 @@
           <input matInput placeholder="Date of Birth" formControlName="dob" required />
         </mat-form-field>
         <br />
-        <input type="checkbox" formControlName="confirm" />
+        <input type="checkbox" formControlName="confirm" /> <span>Terms and Conditions</span>
         <br />
         <button mat-button (click)="onSecondStepNextButtonClick(stepper)">Next</button>
       </form>

@@ -9,7 +9,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
+  brocherPage : FormGroup;
   firstFormGroup: FormGroup;
+  offerPage:FormGroup;
   secondFormGroup: FormGroup;
   thirdFormGroup: FormGroup;
   fourthFormGroup: FormGroup;
@@ -65,10 +67,14 @@ export class AppComponent {
   }
 
   constructor(private _formBuilder: FormBuilder, private http: HttpClient) {
+    this.brocherPage = this._formBuilder.group({
+    });
     this.firstFormGroup = this._formBuilder.group({
       simNumber: ['', Validators.required],
       serviceNumber: ['', Validators.required],
       apiResponseValid: [true, Validators.requiredTrue]
+    });
+    this.offerPage = this._formBuilder.group({
     });
     this.secondFormGroup = this._formBuilder.group({
       email: ['', Validators.email],
@@ -93,10 +99,13 @@ export class AppComponent {
       dob: ['', Validators.required],
       email: ['', Validators.email],
     });
-    this.fifthFormGroup = this._formBuilder.group({});
+    this.fifthFormGroup = this._formBuilder.group({
+    });
     this.sixthFormGroup = this._formBuilder.group({});
   }
-
+  onBrochureNextButtonClick(stepper:MatStepper){
+    stepper.next();
+  }
   onFirstStepNextButtonClick(stepper: MatStepper) {
     if (this.firstFormGroup.valid) {
       this.callApi(stepper);
@@ -107,6 +116,10 @@ export class AppComponent {
     if(this.secondFormGroup.valid){
       this.verifyEmail(stepper);
     }
+  }
+
+  onOfferNextButtonClick(stepper:MatStepper){
+    stepper.next();
   }
   
 
