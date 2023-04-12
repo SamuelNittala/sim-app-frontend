@@ -63,7 +63,7 @@ export class AppComponent {
         stepper.next();
       }
     }catch(err:any){
-
+      console.log(err)
     }
   }
 
@@ -104,7 +104,9 @@ export class AppComponent {
       dob: ['', Validators.required],
       email: ['', Validators.email],
     });
-    this.sixthFormGroup = this._formBuilder.group({});
+    this.sixthFormGroup = this._formBuilder.group({
+      confirm: [false, Validators.requiredTrue]
+    });
     this.seventhFormGroup = this._formBuilder.group({});
   }
   onBrochureNextButtonClick(stepper:MatStepper){
@@ -133,6 +135,21 @@ export class AppComponent {
       stepper.next();
     }else{
       this.errorMessage = "Email not matching";
+    }
+  }catch (err:any){
+    console.log(err)
+  }
+  }
+
+  async onClickIdNextButtonClick(stepper:MatStepper){
+    const apiUrl = 'http://localhost:9191/checkId';
+    try{
+      const data : any = await this.http.post(apiUrl, { idNumber:this.fifthFormGroup.value.idNo,idType:this.fifthFormGroup.value.idType,state:this.fifthFormGroup.value.state,addFirstName:this.fifthFormGroup.value.firstName,addLastName:this.fifthFormGroup.value.lastName,addDateOfBirth:this.fifthFormGroup.value.dob }).toPromise();
+    if(data.successSim){
+      this.errorMessage = null;
+      stepper.next();
+    }else{
+      this.errorMessage = data.checkAadhaar;
     }
   }catch (err:any){
     console.log(err)

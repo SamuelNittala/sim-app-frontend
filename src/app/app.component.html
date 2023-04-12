@@ -41,7 +41,7 @@
     <mat-step [stepControl]="firstFormGroup">
       <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
       <form [formGroup]="firstFormGroup">
-        <ng-template matStepLabel>Step 1</ng-template>
+        <ng-template matStepLabel>SIM Validation</ng-template>
         <mat-form-field>
           <mat-label>Sim Number</mat-label>
           <input matInput placeholder="Sim Number" formControlName="simNumber" minlength="13" maxlength="13"  required />
@@ -85,6 +85,7 @@
       </form>
     </mat-step>
     <mat-step [stepControl]="thirdFormGroup">
+      <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
       <form [formGroup]="thirdFormGroup">
         <ng-template matStepLabel>Customer Personal details</ng-template>
         <mat-form-field>
@@ -138,7 +139,7 @@
         <br />
         <mat-form-field>
           <mat-label>pincode</mat-label>
-          <input matInput placeholder="pincode" formControlName="pincode" required />
+          <input matInput placeholder="pincode" formControlName="pincode" minlength="6" maxlength="6" required />
         </mat-form-field>
         <br/>
         <mat-form-field>
@@ -159,7 +160,7 @@
         <br />
         <mat-form-field>
           <mat-label>ID No</mat-label>
-          <input matInput placeholder="Id no" formControlName="idNo" required />
+          <input matInput placeholder="Id no" formControlName="idNo" minlength="12" maxlength="12" required />
         </mat-form-field>
         <br />
         <mat-form-field>
@@ -191,7 +192,7 @@
           <input matInput placeholder="Date of Birth" formControlName="dob" required />
         </mat-form-field>
         <br />
-        <button mat-button matStepperNext>Next</button>
+        <button mat-button (click)=onClickIdNextButtonClick(stepper)>Next</button>
       </form>
     </mat-step>
     <mat-step [stepControl]="sixthFormGroup">
@@ -206,6 +207,11 @@
         <p> {{ thirdFormGroup.value.lastName}} </p>
         <span>email:</span>
         <p> {{ secondFormGroup.value.email }} </p>
+        <br/>
+        <form [formGroup]="sixthFormGroup">
+        <input type="checkbox" formControlName="confirm" /> <span>The information provided by me is true to my belief</span>
+        </form>
+        <br />
         <button mat-button (click)="onSubmit(stepper)">Next</button>
     </mat-step>
     <mat-step [stepControl]="seventhFormGroup">
