@@ -5,6 +5,7 @@
       "Segoe UI Symbol";
     font-size: 14px;
     box-sizing: border-box;
+    color: #992d2d;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
@@ -67,7 +68,7 @@
     <mat-step [stepControl]="secondFormGroup">
       <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
       <form [formGroup]="secondFormGroup">
-        <ng-template matStepLabel>Step 2</ng-template>
+        <ng-template matStepLabel>Basic User validation</ng-template>
         <mat-form-field>
           <mat-label>Email</mat-label>
           <input matInput placeholder="Email" formControlName="email" required />
@@ -78,14 +79,14 @@
           <input matInput placeholder="Date of Birth" formControlName="dob" required />
         </mat-form-field>
         <br />
-        <input type="checkbox" formControlName="confirm" /> <span>Terms and Conditions</span>
+        <input type="checkbox" formControlName="confirm" /> <span>The information provided by me is true to my belief</span>
         <br />
         <button mat-button (click)="onSecondStepNextButtonClick(stepper)">Next</button>
       </form>
     </mat-step>
     <mat-step [stepControl]="thirdFormGroup">
       <form [formGroup]="thirdFormGroup">
-        <ng-template matStepLabel>Step 3</ng-template>
+        <ng-template matStepLabel>Customer Personal details</ng-template>
         <mat-form-field>
           <mat-label>Title</mat-label>
           <mat-select formControlName="title">
@@ -110,12 +111,47 @@
           <input matInput placeholder="Email" formControlName="email" [value]="secondFormGroup.value.email" readonly  />
         </mat-form-field>
         <br />
-        <button mat-button matStepperNext>Next</button>
+        <mat-form-field>
+          <mat-label>ConfirmEmail</mat-label>
+          <input matInput placeholder="ConfirmEmail" formControlName="confirmEmail"  required  />
+        </mat-form-field>
+        <br />
+        <button mat-button (click)="onConfirmNextButtonClick(stepper)">Next</button>
       </form>
     </mat-step>
     <mat-step [stepControl]="fourthFormGroup">
       <form [formGroup]="fourthFormGroup">
-        <ng-template matStepLabel>Step 4</ng-template>
+        <ng-template matStepLabel>Customer Address Details</ng-template>
+        <mat-form-field>
+          <mat-label>Address</mat-label>
+          <input matInput placeholder="Address" formControlName="address" required />
+        </mat-form-field>
+        <br/>
+        <mat-form-field>
+          <mat-label>Select a State</mat-label>
+          <mat-select formControlName="state">
+            <mat-option *ngFor="let state of states" [value]="state.code">{{
+              state.name
+              }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <br />
+        <mat-form-field>
+          <mat-label>pincode</mat-label>
+          <input matInput placeholder="pincode" formControlName="pincode" required />
+        </mat-form-field>
+        <br/>
+        <mat-form-field>
+          <mat-label>city</mat-label>
+          <input matInput placeholder="city" formControlName="city" required />
+        </mat-form-field>
+        <br/>
+        <button mat-button matStepperNext>Next</button>
+      </form>
+    </mat-step>
+    <mat-step [stepControl]="fifthFormGroup">
+      <form [formGroup]="fifthFormGroup">
+        <ng-template matStepLabel>ID Proof Validation</ng-template>
         <mat-form-field>
           <mat-label>ID type</mat-label>
           <input matInput placeholder="Aadhar" formControlName="idType" readonly />
@@ -135,21 +171,6 @@
           </mat-select>
         </mat-form-field>
         <br />
-        <mat-form-field>
-          <mat-label>Address</mat-label>
-          <input matInput placeholder="Address" formControlName="address" required />
-        </mat-form-field>
-        <br/>
-        <mat-form-field>
-          <mat-label>pincode</mat-label>
-          <input matInput placeholder="pincode" formControlName="pincode" required />
-        </mat-form-field>
-        <br/>
-        <mat-form-field>
-          <mat-label>city</mat-label>
-          <input matInput placeholder="city" formControlName="city" required />
-        </mat-form-field>
-        <br/>
         <mat-form-field>
           <mat-label>First Name</mat-label>
           <input matInput placeholder="First Name" formControlName="firstName" required />
@@ -173,7 +194,7 @@
         <button mat-button matStepperNext>Next</button>
       </form>
     </mat-step>
-    <mat-step [stepControl]="fifthFormGroup">
+    <mat-step [stepControl]="sixthFormGroup">
         <ng-template matStepLabel>Step 5</ng-template>
         <span>SIM number:</span>
         <p> {{ firstFormGroup.value.simNumber }} </p>
@@ -187,7 +208,7 @@
         <p> {{ secondFormGroup.value.email }} </p>
         <button mat-button (click)="onSubmit(stepper)">Next</button>
     </mat-step>
-    <mat-step [stepControl]="sixthFormGroup">
+    <mat-step [stepControl]="seventhFormGroup">
       <ng-template matStepLabel>Success</ng-template>
       <h1>Deatils Submitted Successfully</h1>
     </mat-step>

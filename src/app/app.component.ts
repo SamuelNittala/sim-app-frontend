@@ -17,6 +17,7 @@ export class AppComponent {
   fourthFormGroup: FormGroup;
   fifthFormGroup: FormGroup;
   sixthFormGroup: FormGroup;
+  seventhFormGroup:FormGroup;
   user: any = {};
 
   errorMessage: string | null = null;
@@ -86,22 +87,25 @@ export class AppComponent {
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
       email: [''],
+      confirmEmail: ['',Validators.required],
     });
     this.fourthFormGroup = this._formBuilder.group({
+      address: ['', Validators.required],
+      state: ['', Validators.required],
+      pincode: ['', Validators.required],
+      city: ['', Validators.required],
+    });
+    this.fifthFormGroup = this._formBuilder.group({
       idType: ['Aaadhar'],
       idNo: ['', Validators.required],
       state: ['', Validators.required],
-      address: ['', Validators.required],
-      pincode: ['', Validators.required],
-      city: ['', Validators.required],
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
       dob: ['', Validators.required],
       email: ['', Validators.email],
     });
-    this.fifthFormGroup = this._formBuilder.group({
-    });
     this.sixthFormGroup = this._formBuilder.group({});
+    this.seventhFormGroup = this._formBuilder.group({});
   }
   onBrochureNextButtonClick(stepper:MatStepper){
     stepper.next();
@@ -120,6 +124,19 @@ export class AppComponent {
 
   onOfferNextButtonClick(stepper:MatStepper){
     stepper.next();
+  }
+
+  onConfirmNextButtonClick(stepper:MatStepper){
+    try{
+    if(this.secondFormGroup.value.email==this.thirdFormGroup.value.confirmEmail){
+      this.errorMessage = null;
+      stepper.next();
+    }else{
+      this.errorMessage = "Email not matching";
+    }
+  }catch (err:any){
+    console.log(err)
+  }
   }
   
 
