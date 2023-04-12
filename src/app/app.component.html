@@ -151,6 +151,7 @@
       </form>
     </mat-step>
     <mat-step [stepControl]="fifthFormGroup">
+      <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
       <form [formGroup]="fifthFormGroup">
         <ng-template matStepLabel>ID Proof Validation</ng-template>
         <mat-form-field>
