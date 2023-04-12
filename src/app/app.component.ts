@@ -179,8 +179,12 @@ export class AppComponent {
     try{
       const data : any = await this.http.post(apiUrl, { idNumber:this.fifthFormGroup.value.idNo,idType:this.fifthFormGroup.value.idType,state:this.fifthFormGroup.value.state,addFirstName:this.fifthFormGroup.value.firstName,addLastName:this.fifthFormGroup.value.lastName,addDateOfBirth:this.fifthFormGroup.value.dob }).toPromise();
     if(data.successSim){
-      this.errorMessage = null;
-      stepper.next();
+      if(this.secondFormGroup.value.dob==this.fifthFormGroup.value.dob){
+          this.errorMessage = null;
+          stepper.next();
+      }else{
+        this.errorMessage = "invalid dob";
+      }
     }else{
       this.errorMessage = data.checkAadhaar;
     }
